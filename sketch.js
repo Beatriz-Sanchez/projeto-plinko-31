@@ -9,7 +9,8 @@ Complete o jogo Plinko
 Começe criando a classe das partículas
 - precisam ser corpos circulares, adicionados ao mundo
 - adicione uma propriedade de cor que gere cores aleatórias para cada particula criada:
-this.color = color(random(50,255),random(50,255),random(50,255));
+this.color = random(0,255), random(0,255), random(0,255)
+fica em formato RGB, mas com cada número sendo aleatório
 - não se esqueça de usar a propriedade dentro do fill() para  dar a cor, e usar push() e pop() pra não deixar os outros itens do jogo coloridos
 */
 
@@ -30,7 +31,7 @@ function setup() {
   ground = new Ground(width/2,height,width,20);
 
   //modifique o FOR para gerar divisões de 80 em 80 pixels até o fim da tela
-  for (var k = 0; k <=80; k = k + 80) {
+  for (var k = 0; k <=width; k = k + 80) {
     divisions.push(new Divisions(k, height-divisionHeight/2, 10, divisionHeight));
   }
 
@@ -46,10 +47,16 @@ function setup() {
   }
 
   //crie a 3ª linha de objetos plinko
+  for (var j = 50; j <=width-10; j=j+50) 
+  {
+    plinkos.push(new Plinko(j,275));
+  }
 
-  
   //crie a 4ª linha de objetos plinko
-
+  for (var j = 50; j <=width-10; j=j+50) 
+  {
+    plinkos.push(new Plinko(j,375));
+  }
       
 }
  
@@ -72,8 +79,13 @@ function draw() {
     divisions[k].display();
   }
 
-  //criar as partículas a cada 60 quadros, em posições X aleatórias e adicioná-las à matriz particles
+  //criar as partículas a cada 60 quadros e adicioná-las à matriz particles
+  if (frameCount%60 === 0) {
+    particles.push(new Particles(random(30,width-30)));
+  }
 
   //exibir as partículas usando um loop FOR (seguir o exemplo da exisbição dos plinkos e das divisões)
-
+  for (var m = 0; m < particles.length; m++) {
+    particles[m].display();   
+  }
 }
